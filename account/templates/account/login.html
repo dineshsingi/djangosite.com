@@ -1,0 +1,123 @@
+{% extends 'personal/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body{
+        background-color: #fad5ff;
+    }
+   /*signin*/
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/*end singin*/
+</style>
+
+<br>
+<main class="form-signin w-100 m-auto">
+<form method="post"> {% csrf_token %}
+    
+    <div class="d-flex flex-column pb-3">
+        <img style="border-radius: 10px;" class="img-fluid mx-auto d-block" src="{% static 'user.png' %}" alt="Blog Dinesh" width="60" height="60">
+    </div>
+
+    <h1 class="h3 mb-3 fw-normal" style="color: #0f5132; font-family: 'Bookman Old Style'; text-align: center"> <strong> Login </strong>  </h1>
+    <hr>
+
+    <div class="form-floating">
+      <input type="email" name="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com" required>
+        <label for="floatingInputEmail"> Email Address </label>
+    </div>
+
+    <div class="form-floating">
+      <input type="password" name="password" class="form-control" id="floatingInputPassword" placeholder="Password" required>
+    <label for="floatingInputPassword"> Password </label>
+    </div>
+
+    {% for field in login_form %}
+        <p>
+            {% for error in field.errors %}
+            <p style="color: red;"> {{ error }} </p>
+    {% endfor %}
+    {% endfor %}
+
+    {% if login_form.non_field_errors %}
+    <div style="color: red;">
+        <p> {{ login_form.non_field_errors }}</p>
+    </div>
+    {% endif %}
+
+    {% if success_login %}
+        <u><p style="color:green; text-align: center;"> {{ success_login}}</p> </u>
+    {% endif %}
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Log in</button>
+
+  </form>
+</main>
+
+<div class="d-flex flex-column">
+    <a class="m-auto" href="{% url 'password_reset' %}"> Reset Password</a>
+</div>
+
+<!--<br>-->
+<!--<div class="container">-->
+<!--    <h2> Login </h2> <hr style="color: black">-->
+
+<!--<form method="post"> {% csrf_token %}-->
+<!--    {% for field in login_form %}-->
+<!--        <p>-->
+<!--            {{ field.label_tag }}-->
+<!--            {{ field }}-->
+
+<!--            {% if field.help_text %}-->
+<!--                <small style="color: grey;"> {{ field.help_text }} </small>-->
+<!--            {% endif %}-->
+<!--            </p>-->
+<!--    {% endfor %}-->
+
+<!--&lt;!&ndash;            instead of looping through errors inside this for loop take it outside&ndash;&gt;-->
+<!--&lt;!&ndash;            {% for error in field.errors %}&ndash;&gt;-->
+<!--&lt;!&ndash;            <p style="color: red;"> {{ error }} </p>&ndash;&gt;-->
+<!--&lt;!&ndash;            {% endfor %}&ndash;&gt;-->
+
+<!--&lt;!&ndash;            {% if login_form.non_field_errors %}&ndash;&gt;-->
+<!--&lt;!&ndash;            <div style="color: red;">&ndash;&gt;-->
+<!--&lt;!&ndash;                <p> {{ login_form.non_field_errors }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            {% endif %}&ndash;&gt;-->
+<!--&lt;!&ndash;        </p>&ndash;&gt;-->
+
+<!--    {% for field in login_form %}-->
+<!--        {% for error in field.errors %}-->
+<!--            <p style="color: red;"> {{ error }} </p>-->
+<!--        {% endfor %}-->
+<!--    {% endfor %}-->
+
+<!--    {% if login_form.non_field_errors %}-->
+<!--    <div style="color: red;">-->
+<!--        <p> {{ login_form.non_field_errors }}</p>-->
+<!--    </div>-->
+<!--    {% endif %}-->
+
+<!--    <button class="btn btn-primary" type="submit"> Login </button>-->
+
+
+<!--</form> </div>-->
+
+{% endblock content %}

@@ -1,0 +1,112 @@
+{% extends 'personal/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    body{
+        background-color: #f2ff84;
+    }
+   /*signin*/
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="text"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: -1px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/*end singin*/
+</style>
+
+<br>
+<main class="form-signin w-100 m-auto">
+<form method="post"> {% csrf_token %}
+
+    <div class="d-flex flex-column pb-3">
+        <img style="border-radius: 10px;" class="img-fluid mx-auto d-block" src="{% static 'user.png' %}" alt="Blog Dinesh" width="60" height="60">
+    </div>
+
+    <h1 class="h3 mb-3 fw-normal" style="color: #0f5132; font-family: 'Bookman Old Style'; text-align: center"> <strong> Register an account </strong> </h1>
+    <hr>
+
+    <div class="form-floating">
+      <input type="email" name="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com" required autofocus>
+        <label for="floatingInputEmail"> Email address </label>
+    </div>
+
+    <div class="form-floating">
+      <input type="text" name="username" class="form-control" id="floatingInputUsername" placeholder="Username" required autofocus>
+        <label for="floatingInputUsername"> Username </label>
+    </div>
+
+    <div class="form-floating">
+      <input type="password" name="password1" class="form-control" id="floatingInputPassword1" placeholder="Password" required>
+        <label for="floatingInputPassword1"> Password </label>
+    </div>
+
+    <div class="form-floating">
+      <input type="password" name="password2" class="form-control" id="floatingInputPassword2" placeholder="Confirm Password" required>
+    <label for="floatingInputPassword2"> Confirm Password </label>
+    </div>
+
+    {% for field in registration_form %}
+        <p>
+            {% for error in field.errors %}
+            <p style="color: red;"> {{ error }} </p>
+    {% endfor %}
+    {% endfor %}
+
+    {% if registration_form.non_field_errors %}
+    <div style="color: red;">
+        <p> {{ registration_form.non_field_errors }}</p>
+    </div>
+    {% endif %}
+
+    {% if success_login %}
+        <u><p style="color:green; text-align: center;"> {{ success_login}}</p> </u>
+    {% endif %}
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit"> Register </button>
+
+  </form>
+</main>
+
+
+<!--<div class="container">-->
+<!--    <h2 style="font-family: Arial" > Register </h2> <hr style="color: black">-->
+<!--<form method="post"> {% csrf_token %}-->
+<!--    {% for field in registration_form %}-->
+<!--        <p>-->
+<!--            {{ field.label_tag }}-->
+<!--            {{ field }}-->
+
+<!--            {% if field.help_text %}-->
+<!--                <small style="color: grey;"> {{ field.help_text }} </small>-->
+<!--            {% endif %}-->
+
+<!--            {% for error in field.errors %}-->
+<!--            <p style="color: red;"> {{ error }} </p>-->
+<!--            {% endfor %}-->
+<!--        </p>-->
+
+<!--    {% endfor %}-->
+<!--    <button class="btn btn-success" type="submit"> Register </button>-->
+
+<!--</form> </div>-->
+
+
+{% endblock content %}

@@ -1,0 +1,156 @@
+{% extends 'personal/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body{
+        background-color: rgba(169,181,188,0.98);
+    }
+
+    @media (max-width: 768px) {
+        .right-column {
+            margin-left: 0px;
+        }
+    }
+    @media (min-width: 768px) {
+        .right-column {
+            margin-left: 20px;
+        }
+    }
+    .blog-post-container{
+        background-color: #fff;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+    .create-post-bar{
+        background-color: #fff;
+        margin-bottom: 20px;
+    }
+    .left-column{
+        padding: 0px;
+    }
+    .right-column {
+        padding: 0px;
+    }
+    .lead{
+        font-size: 17px;
+        color: black;
+    }
+</style>
+
+<br>
+<!-- main content -->
+<div class="container">
+	<div class="row">
+
+		<!-- blog feed -->
+		<div class="left-column col-lg-7 offset-lg-1">
+
+			<!-- Top 'create post' bar -->
+			<div class="d-lg-none mb-3">
+				<div class="card m-auto d-flex flex-column p-3">
+					<img class="img-fluid d-block m-auto pb-2" src="{% static 'clip-art.png' %}" width="72" height="72">
+					<p class="lead">In this course you'll learn how to build a simple blog with user registration and blog CRUD functionality. Django is a powerful
+	  					framework and you'll see why in this course.</p>
+					<p class="m-auto"><a class="btn btn-primary" href="{% url 'blog:create' %}">Create post</a></p>
+				</div>
+			</div>
+			<!-- end Top 'create post' bar -->
+
+			<!-- Blog posts-->
+			{% if blog_posts %}
+				{% for post in blog_posts %}
+					<div class="blog-post-container">
+						{% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="blog-post-container">
+					{% include 'blog/snippets/blog_post_snippet.html' with query=query %}
+				</div>
+			{% endif %}
+			<!-- End Blog posts-->
+
+		<!-- Pagination -->
+		{% include 'blog/snippets/blog_post_pagination.html' with blog_posts=blog_posts %}
+		</div>
+		<!-- end blog feed -->
+
+		<!-- Right 'create post' column  -->
+		<div class="right-column col-lg-3 d-lg-flex d-none flex-column">
+
+			<div class="card create-post-bar d-flex flex-column p-3">
+				<img class="img-fluid d-block m-auto pb-2" src="{% static 'clip-art.png' %}" width="72" height="72">
+				<p class="lead">In this course you'll learn how to build a simple blog with user registration and blog CRUD functionality. Django is a powerful
+  					framework and you'll see why in this course.</p>
+				<p class="m-auto"><a class="btn btn-primary" href="{% url 'blog:create' %}">Create post</a></p>
+			</div>
+
+		</div>
+		<!-- end Right 'create post' column  -->
+	</div>
+</div>
+
+
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        &lt;!&ndash;Right 'create post' bar&ndash;&gt;-->
+<!--        <div class="create-post-bar d-lg-none col-lg-7 offset-lg-1" style="border: 1px solid black">-->
+<!--            <a href="{% url 'blog:create' %}"> Create Post </a>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;End Right 'create post' bar&ndash;&gt;-->
+<!--        -->
+<!--        &lt;!&ndash;Blog Feed&ndash;&gt;-->
+<!--        <div class="left-column col-lg-7 offset-lg-1" style="border: 1px solid black">-->
+<!--            <div class="blog-post-container">-->
+<!--                <p> Thingy </p>-->
+<!--            </div>-->
+<!--            <div class="blog-post-container">-->
+<!--                <p> Thingy </p>-->
+<!--            </div>-->
+<!--            <div class="blog-post-container">-->
+<!--                <p> Thingy </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;End Blog Feed&ndash;&gt;-->
+<!--        &lt;!&ndash;Right 'create post' column&ndash;&gt;-->
+<!--        <div class="right-column col-lg-3 d-lg-flex d-none flex-column" style="border: 1px solid black">-->
+<!--            <div class="create-post-bar">-->
+<!--                <p>stuff</p>-->
+<!--                <p>stuff</p>-->
+<!--                <p>stuff</p>-->
+<!--                <p>stuff</p>-->
+<!--                <p>stuff</p>-->
+<!--                <p>stuff</p>-->
+<!--                <p>stuff</p>-->
+<!--                <p>stuff</p>-->
+<!--                <a href="{% url 'blog:create' %}"> Create Post </a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;End Right 'create post' column&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--    <p> {{ some_string }} </p>-->
+<!--    <p> {{ some_number }} </p>-->
+<!--    {% for question in questions %}-->
+<!--        {% include 'personal/snippets/body_snippet.html' with value=question %}-->
+<!--    {% endfor%}-->
+<!--    {% for user in users %}-->
+<!--        {% include 'personal/snippets/body_snippet.html' with value=user %}-->
+<!--    {% endfor%}-->
+<!--    {% for user in users %}-->
+<!--        <p> {{ user.username }}, joined on: {{ user.date_joined }} </p>-->
+<!--    {% endfor%}-->
+<!--<div class="container">-->
+<!--    <div class="d-flex flex-column"> &lt;!&ndash; Flex Box &ndash;&gt;-->
+<!--        <h3 style="color: #0c4128; font-family:'Bookman Old Style';"> Registered Users </h3> <hr style="color: black">-->
+<!--        {% for user in users %}-->
+<!--        <p> {{ user }} </p>-->
+<!--        {% endfor%}-->
+<!--    </div>-->
+<!--</div>-->
+
+{% endblock content%}
+

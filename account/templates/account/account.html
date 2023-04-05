@@ -1,0 +1,140 @@
+{% extends 'personal/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body{
+        background-color: #f2dede;
+    }
+   /*signin*/
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="username"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/*end singin*/
+
+    .blog-posts{
+        max-width: 450px;
+        width: 100%;
+        margin: auto;
+    }
+
+</style>
+
+<br>
+<main class="form-signin w-100 m-auto">
+<form method="post"> {% csrf_token %}
+
+    <div class="d-flex flex-column pb-3">
+        <img style="border-radius: 10px;" class="img-fluid mx-auto d-block" src="{% static 'user.png' %}" alt="Blog Dinesh" width="60" height="60">
+    </div>
+
+    <h1 class="h3 mb-3 fw-normal" style="color: #0f5132; font-family: 'Bookman Old Style'; text-align: center"> Account </h1>
+    <hr>
+
+    <div class="form-floating">
+      <input type="email" name="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com" required autofocus value="{{ account_form.initial.email }}">
+        <label for="floatingInputEmail"> Update Email </label>
+    </div>
+
+    <div class="form-floating">
+      <input type="text" name="username" class="form-control" id="floatingInputUsername" placeholder="Username" required value="{{ account_form.initial.username }}">
+    <label for="floatingInputUsername"> Update Username</label>
+    </div>
+
+    {% for field in account_form %}
+        <p>
+            {% for error in field.errors %}
+            <p style="color: red;"> {{ error }} </p>
+    {% endfor %}
+    {% endfor %}
+
+    {% if account_form.non_field_errors %}
+    <div style="color: red;">
+        <p> {{ account_form.non_field_errors }}</p>
+    </div>
+    {% endif %}
+
+    {% if success_message %}
+        <u><p style="color:green; text-align: center;"> {{ success_message}}</p> </u>
+    {% endif %}
+
+    <button class="w-100 btn btn-lg btn-dark" type="submit"> Save Changes </button>
+
+  </form>
+</main>
+
+<div class="d-flex flex-column">
+    <a class="m-auto" href="{% url 'password_change' %}"> Change Password</a>
+</div>
+
+
+<div class="container mt-4 p-4">
+    <div class="row">
+        <div class="blog-posts">
+            <h3 class="mb-3 font-weight-normal" style="color: #6f42c1; font-family:'Bookman Old Style'; text-align: center"> Blog Posts: </h3>
+
+            {% if blog_posts %}
+
+                {% for post in blog_posts %}
+                <a href="{% url 'blog:detail' post.slug %}" style="text-decoration: none;">
+                   <p style="border-radius: 15px; color: #a94442; font-family: Arial; text-align: center; padding: 20px;" class="list-group-item-light"> {{ post }} </p>
+                </a>
+                {% endfor %}
+
+            {% else %}
+                <p> You have no blog posts. Create a post <a href="{% url 'blog:create' %}"> here </a>.</p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--<div class="container">-->
+<!--    <h2 style="color: #0f5132; font-family: Arial;" > Account </h2> <hr style="color: black">-->
+<!--<form method="post"> {% csrf_token %}-->
+<!--    {% for field in account_form %}-->
+<!--        <p>-->
+<!--            {{ field.label_tag }}-->
+<!--            {{ field }}-->
+
+<!--            {% if field.help_text %}-->
+<!--                <small style="color: grey;"> {{ field.help_text }} </small>-->
+<!--            {% endif %}-->
+<!--            </p>-->
+<!--    {% endfor %}-->
+
+<!--    {% for field in account_form %}-->
+<!--        {% for error in field.errors %}-->
+<!--            <p style="color: red;"> {{ error }} </p>-->
+<!--        {% endfor %}-->
+<!--    {% endfor %}-->
+
+<!--    {% if account_form.non_field_errors %}-->
+<!--    <div style="color: red;">-->
+<!--        <p> {{ account_form.non_field_errors }}</p>-->
+<!--    </div>-->
+<!--    {% endif %}-->
+
+<!--    <button class="btn btn-dark" type="submit"> Save changes </button>-->
+
+<!--</form> </div>-->
+
+
+{% endblock content %}
